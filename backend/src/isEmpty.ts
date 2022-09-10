@@ -1,4 +1,4 @@
-export const isEmpty = (e): boolean => {
+export const isEmpty = (e: any): boolean => {
   switch (e) {
     case "":
     case 0:
