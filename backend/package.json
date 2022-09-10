@@ -4,15 +4,14 @@
   "description": "Helpful javascript functions and whatnot",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node dist/app.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "offline": "sls offline start --stage dev"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ThaFishDance/Helpful-Donkey.git"
   },
   "author": "Christopher Huffman",
-  "type": "module",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ThaFishDance/Helpful-Donkey/issues"
@@ -20,11 +19,14 @@
   "homepage": "https://github.com/ThaFishDance/Helpful-Donkey#readme",
   "devDependencies": {
     "@prisma/client": "^4.2.0",
+    "@types/aws-lambda": "^8.10.103",
+    "@types/node": "^18.7.16",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
     "eslint": "^8.21.0",
     "eslint-plugin-react": "^7.30.1",
     "prisma": "^4.2.0",
+    "serverless-bundle": "^5.5.0",
     "serverless-offline": "^10.0.1",
     "typescript": "^4.7.4"
   }
