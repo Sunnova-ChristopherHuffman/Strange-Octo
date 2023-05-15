@@ -1,71 +1,29 @@
-# Template for serverless applications
-service: service-name
-
-plugins:
-  - serverless-bundle # used for TS and prisma
+service: jo-innovation
 
 provider:
-  name: aws
-  state: dev
-  endpointType: REGIONAL
-  runtime: nodejs16.x
-  timeout: 10 # seconds
-  memorySize: 512
-  profile: ${self:custom.settings.${self:custom.myStage}.PROFILE}
-  region: ${self.custom.settings.${self.custom.myStage}.REGION}
-  iam:
-    role: ${self:custom.settings.${self.custom.myStage}.ROLE}
-  kmsKeyArn: ${self.custom.settings.${self:custom.myStage}.KMS_KEY_ARN}
-  deploymentBucket:
-    name: ${self:custom.settings.${self.custom.myStage}.DEPLOYMENT_BUCKET}
-    serverSideEncryption: AWS256
-  environment: ${self:custom.settings.${self.custom.myStage}}
-  apiGateway: 
-    shouldStartNameWithService: true
-  
-custom:
-  bundle:
-  linting: false
-  packagerOptions:
-    scripts:
-      - npx prisma generate
-  copyFiles:
-    - from: "path to env engine"
-      to: "lambdas/engine name"
-    - from: "path to prisma client"
-      to: "lambdas/schema.prisma"
-  myStage: ${opt:stage, self:provider.stage}
-  settings:
-    dev:
-      STAGE: dev
-      BACKEND_BUCKET: service-name-bucket-dev
-      PROFILE: profile_name
-      REGION: us-east-1
-      ROLE: ARN to serverless enhas role
-      KMS_KEY_ARN: ARN for kms
-      DEPLOYMENT_BUCKET: collection deployment bucket
-      # SECRET_ARN: secret_arn
+    name: aws
+    runtime: python3.9
+    profile: default
+
+plugins:
+    - serverless-offline
+
 
 package:
-  individually: true
+    individually: true
 
 functions:
-  yeet:
-    handler: lambdas/yeet.handler
-    description: function description
-    # vpc: ${file(environments/config.${opt:stage}.js):nameOfVPCMod}
-    timeout: 30
-    events:
-      - http:
-          path: path/parameters/{stuff}
-          method: GET
-          cors:
-            origin: "*"
+    hello:
+        handler: lambdas/test.lambda_handler
+        events:
+            - http:
+                  path: sales-invoice/services/apexrest/JobOptimization/
+                  method: GET
+                  cors: true
 
-# If you need a bucket for the backend
 resources:
-  Resources:
-    AppNameBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.settings/${self:custom.myStage}.BACKEND_BUCKET}
+    Resources:
+        DemoBucketUpload:
+            Type: AWS::S3::Bucket
+            Properties:
+                BucketName: jo-innovation-demo-bucket
